@@ -1,0 +1,81 @@
+Go 1.6 - Concurrent Map Access
+Golang Auckland Meetup Group
+17 Feb 2015
+Tags: GoAKL, Go, Go1.6, Auckland, Hapara
+
+Am Laher
+Gopher, Hapara Inc.
+am.laher@hapara.com
+https://github.com/laher/maps
+
+* Go 1.6 announcement.
+
+.image party-gopher.png
+
+Announcement:
+
+.link https://tip.golang.org/doc/go1.6
+
+Slides:
+
+.link https://talks.golang.org/2016/state-of-go.slide#1 
+
+* Concurrent Map Access
+
+- Go now crashes when you trigger a data race in maps.
+- Uergh.
+
+* Topics Introduced
+
+- Concurrency and race conditions
+- Goroutines; Mutexes vs Channels
+- Race detector
+- Maps (dictionaries / hashtables)
+- Panic/Recover
+
+* Introduction
+
+Go maps have always been sensitive to data races.
+
+.link http://dave.cheney.net/2015/12/07/are-go-maps-sensitive-to-data-races
+
+But now, Go will crash when you trigger one.
+
+* Example
+
+.play map_unsafe.go
+
+* What to do?
+
+* The most common solution: 
+
+- Concurrency barrier, e.g.
+- sync.Mutex or sync.RWMutex
+- Wut, locks? But, but, but ... Hoare's CSP?!
+
+* Solution 1
+
+.play map_safe_mutex.go
+
+* Solution 2
+
+A silly but more CSP-ish option.
+
+.play map_safe_select.go
+
+* Solution 3
+
+Still silly, but more useful
+
+.play map_safe_select_refactor.go
+
+* Other options
+
+- Populate your map in a single goroutine.
+- Be judicious with use of maps. Use a struct?
+
+* Solution 4
+
+Speed up the unsafe version to force the data race.
+
+.play map_unsafe_faster.go
