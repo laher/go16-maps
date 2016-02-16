@@ -27,11 +27,11 @@ Slides:
 
 * Topics Introduced
 
-- Concurrency and race conditions
-- Goroutines; Mutexes vs Channels
+- Concurrency
+- Race conditions
 - Race detector
 - Maps (dictionaries / hashtables)
-- Panic/Recover
+- Goroutines; Mutexes vs Channels
 
 * Introduction
 
@@ -39,17 +39,34 @@ Go maps have always been sensitive to data races.
 
 .link http://dave.cheney.net/2015/12/07/are-go-maps-sensitive-to-data-races
 
-But now, Go will crash when you trigger one.
+This article gives some more details about the perils of data races.
+
+.link https://software.intel.com/en-us/blogs/2013/01/06/benign-data-races-what-could-possibly-go-wrong
+
+But now, Go will crash _with more certainty_ when you trigger one.
 
 * Example
 
+_Run these examples with & without the race detector. Also, with go1.5 vs go1.6_
+
 .play map_unsafe.go
+
+* Force the race condition
+
+Speed up the program to force the data race.
+
+.play map_unsafe_faster.go
+
+* Protect yourself with panic/recover?
+
+No recovery!
+
+.play map_unsafe_norecovery.go
 
 * What to do?
 
-* The most common solution: 
-
-- Concurrency barrier, e.g.
+Use the race detector. Keep using it.
+Use a 'memory barrier primitive', e.g.
 - sync.Mutex or sync.RWMutex
 - Wut, locks? But, but, but ... Hoare's CSP?!
 
@@ -65,17 +82,16 @@ A silly but more CSP-ish option.
 
 * Solution 3
 
-Still silly, but more useful
+Still silly, but more useful. 
+ 
+- Note that it doesn't support concurrent reads.
 
 .play map_safe_select_refactor.go
 
-* Other options
+* Other design considerations
 
-- Populate your map in a single goroutine.
-- Be judicious with use of maps. Use a struct?
-
-* Solution 4
-
-Speed up the unsafe version to force the data race.
-
-.play map_unsafe_faster.go
+- Populate your map up-front in a single goroutine.
+- Be judicious with use of maps.
+- Share the value, not the whole map?
+- Use a struct / slice where possible?
+- Get the race detector into your build process
