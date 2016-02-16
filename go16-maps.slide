@@ -6,7 +6,7 @@ Tags: GoAKL, Go, Go1.6, Auckland, Hapara
 Am Laher
 Gopher, Hapara Inc.
 am.laher@hapara.com
-https://github.com/laher/maps
+https://github.com/laher/go16-maps
 
 * Go 1.6 announcement.
 
@@ -95,3 +95,41 @@ Still silly, but more useful.
 - Share the value, not the whole map?
 - Use a struct / slice where possible?
 - Get the race detector into your build process
+
+* Vendoring
+
+What is vendoring?
+
+- Support for storing 3rd party dependencies, as source, within your code
+.link https://docs.google.com/document/d/1Bz5-UB7g2uPBdOx-rw5t9MxJwkfpx90cqG9AFL0JAYo/edit Proposal
+
+Do you need it?
+
+- Pinning dependency versions
+- Repeatable builds
+- Remove reliance on 3rd party services for your build
+- Only for executables. Not for libraries. IMO.
+
+* Vendoring changes
+
+** What has changed in Go1.6?
+
+GO15VENDOREXPERIMENT=1 switched on by default
+Better tooling support:
+- baked into go/build, not just go/cmd
+- https://github.com/golang/go/issues/12278 
+
+* That's all 
+
+folks ... for today.
+
+- Let's plan another. March/April.
+
+* Next meetup
+
+- Revisit any topics from today?
+- Hello, Go World?
+- Polymorphism in Go (using Go types for fun and profit)
+- Concurrency patterns
+- Go tools (build/ides/static analysis/...)
+- Something you'd like to speak about?
