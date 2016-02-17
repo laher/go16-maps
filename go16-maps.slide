@@ -84,7 +84,7 @@ A silly but more CSP-ish option.
 
 Still silly, but more useful. 
  
-- Note that it doesn't support concurrent reads.
+- Note that it doesn't provide concurrent reads.
 
 .play map_safe_select_refactor.go
 
@@ -101,7 +101,7 @@ Still silly, but more useful.
 What is vendoring?
 
 - Support for storing 3rd party dependencies, as source, within your code
-.link https://docs.google.com/document/d/1Bz5-UB7g2uPBdOx-rw5t9MxJwkfpx90cqG9AFL0JAYo/edit Proposal
+.link https://golang.org/s/go15vendor
 
 Do you need it?
 
@@ -112,18 +112,20 @@ Do you need it?
 
 * Vendoring changes
 
-** What has changed in Go1.6?
+What has changed in Go1.6?
 
 GO15VENDOREXPERIMENT=1 switched on by default
 Better tooling support:
 - baked into go/build, not just go/cmd
-- https://github.com/golang/go/issues/12278 
+.link https://github.com/golang/go/issues/12278
+- Also go/loader. Which is used by tools like errcheck
+.link https://github.com/golang/tools/blob/master/go/loader/loader.go#L28
 
 * That's all 
 
 folks ... for today.
 
-- Let's plan another. March/April.
+- Let's plan another. March/April-ish.
 
 * Next meetup
 
